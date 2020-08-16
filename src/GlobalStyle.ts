@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
-export const GlobalStyle = createGlobalStyle`
+const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     color: white;
@@ -22,3 +22,5 @@ export const GlobalStyle = createGlobalStyle`
     list-style: none;
   }
 `;
+
+export default GlobalStyle;
