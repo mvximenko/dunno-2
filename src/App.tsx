@@ -6,11 +6,13 @@ import Series from './components/Series';
 import Title from './components/Title';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
+import Header from './components/layout/Header';
 import GlobalStyle from './GlobalStyle';
 
 const App = () => (
   <>
     <GlobalStyle />
+    <Header />
     <Switch>
       <Route exact path='/'>
         <Home />
