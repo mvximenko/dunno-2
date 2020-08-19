@@ -5,19 +5,19 @@ interface Sizes {
 export default {
   up(size: string) {
     const sizes: Sizes = {
-      sm: '600px',
-      md: '960px',
-      lg: '1280px',
-      xl: '1920px',
+      sm: '767.93px',
+      md: '1365.93px',
+      lg: '1439.93px',
+      xl: '1919.93px',
     };
     return `@media only screen and (min-width: ${sizes[size]})`;
   },
   down(size: string) {
     const sizes: Sizes = {
-      sm: '600px',
-      md: '960px',
-      lg: '1280px',
-      xl: '1920px',
+      sm: '767.93px',
+      md: '1365.93px',
+      lg: '1439.93px',
+      xl: '1919.93px',
     };
     return `@media only screen and (max-width: ${sizes[size]})`;
   },
