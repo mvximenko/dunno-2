@@ -1,29 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import PlayIcon from '../assets/play.svg';
 import NextIcon from '../assets/next.svg';
 import { URL, titles } from '../config';
 import {
-  Background,
+  Slider,
+  Wrapper,
   Picture,
-  Quote,
+  Background,
+  Content,
   Title,
+  Quote,
   Buttons,
   Play,
   Next,
-  Content,
   Shade,
-  Slider,
-  Wrapper,
+  Lines,
+  Line,
 } from './HomeStyles';
 
 const Home = () => {
-  const [num, setNumber] = useState(0);
-  const { title, quote, endpoint } = titles[num];
+  const [state, setState] = useState({ slide: 0, loaded: false });
+  const { slide, loaded } = state;
+  const { title, quote, endpoint } = titles[slide];
+
+  const nextTitle = useCallback(() => {
+    slide === titles.length - 1
+      ? setState({ slide: 0, loaded: false })
+      : setState({ slide: slide + 1, loaded: false });
+  }, [slide]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      nextTitle();
+    }, 8000);
+    return () => clearInterval(interval);
+  }, [slide, nextTitle]);
 
   return (
     <Slider>
       <Wrapper>
-        <Picture>
+        <Picture fade={loaded} onLoad={() => setState({ slide, loaded: true })}>
           <source
             media='(max-width: 767px) and (orientation: portrait)'
             srcSet={`${URL}320x384/${endpoint}, ${URL}640x768/${endpoint} 2x`}
@@ -55,20 +72,27 @@ const Home = () => {
           <Background src={`${URL}1920x960/${endpoint}`} alt={title} />
         </Picture>
         <Content>
-          <Title to='/'>{title}</Title>
-          <Quote>{quote}</Quote>
+          <Link to='/'>
+            <Title fade={loaded}>{title}</Title>
+          </Link>
+          <Quote fade={loaded}>{quote}</Quote>
           <Buttons>
             <Play>
-              <img src={PlayIcon} />
+              <img src={PlayIcon} alt='Watch Trailer' />
               Watch Trailer
             </Play>
-            <Next>
-              <img src={NextIcon} />
+            <Next onClick={nextTitle}>
+              <img src={NextIcon} alt='Next Slide' />
             </Next>
           </Buttons>
         </Content>
         <Shade></Shade>
       </Wrapper>
+      <Lines>
+        {titles.map((title, index) => (
+          <Line key={index} fade={loaded && slide === index}></Line>
+        ))}
+      </Lines>
     </Slider>
   );
 };

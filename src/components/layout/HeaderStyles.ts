@@ -72,7 +72,7 @@ export const Search = styled.img`
 `;
 
 export const Span = styled.span`
-  ${[sizes.down('lg')]} {
+  ${[sizes.down('md')]} {
     display: none;
   }
 `;
